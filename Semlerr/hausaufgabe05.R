@@ -31,8 +31,8 @@ dat <- read.table("body_dim_long.tab",header=TRUE)
 # ist. Wie bei anderen Berechnungen können wir den Output von ggplot einer
 # Variabel zuweisen. Danach müssen wir nur den Variabelnamen in die Klammer von
 # print() einpacken.
-#weight.grafik <- ggplot(data=dat,aes(x=weight)) + geom_histogram(aes(y=..density..),fill="white",color="black") + geom_density()
-#print(weight.grafik)
+# weight.grafik <- ggplot(data=dat,aes(x=weight)) + geom_histogram(aes(y=..density..),fill="white",color="black") + geom_density()
+# print(weight.grafik)
 
 # Wenn wir verschiedene Grafiken mit einem Datenzsatz machen möchten, ist es
 # nervig, wenn wir den gemeinsamen Teil immer wieder eingeben müssen. Auch Teile
@@ -74,7 +74,8 @@ dat <- read.table("body_dim_long.tab",header=TRUE)
 # auch Größe anschauen. Sind die Studenten mancher Studiengänge größer als die anderen?
 # Weil wir deutlich weniger Männer haben und es einen bekannten Unterschied in der Größe 
 # zwischen Männern und Frauen gibt, schließen wir erstmal die Männer aus:
-#frauen <- subset(dat, CODE_HIER)
+
+women <- subset(dat, sex=="f")
 
 # (Sie sollten sich wirklich überlegen, ob der Schritt "gut" ist. Haben wir 
 # dadurch unsre Ergebnisse verstellt? Sie müssen hier nichts schreiben, aber 
@@ -88,22 +89,32 @@ dat <- read.table("body_dim_long.tab",header=TRUE)
 #sollten Sie die Plots so machen, damit man einen Vergleich zwischen den Gruppen
 #ziehen kann. Dafür gibt es verschiedene Möglichkeiten; die Wahl bleibt Ihnen
 #überlassen. frauen.studiengang.bw <- CODE_HIER print(frauen.studiengang.bw)
+> women.studiengang.bw <- ggplot(data=women,aes(x=height)) + geom_boxplot(aes(x=major,y=height))
+> print(women.studiengang.bw)
 
 # Sehen die Studiengänge anders aus? Wir müssen hier noch relativ vorrsichtig
 # sein, weil die Gruppen *unbalanziert* sind, d.h. die Gruppen sind
 # unterschiedlich groß. Aber wie sieht der Vergleich auf den ersten Blick aus?
 # (Keine explizite Antwort nötig, nur eine Überlegung.)
 
+Studiengänge mit großer Verteilungsspannweite  (klinische ling und other) haben eine vergleichsweisen niedrigeren Mittelwert, als andere.
+
 # Wir können natürlich auch die Dichte anschauen:
 #frauen.studiengang.dichte <- CODE_HIER
 #print(frauen.studiengang.dichte)
+women.studiengang.dichte <- ggplot(data=women,aes(x=height)) + geom_density(aes(x=height,color=major))
+> print(women.studiengang.dichte)
 
 # Haben Sie den gleichen Eindruck wie bei Box-Whisker bekommen? Unterscheiden
 # sich die Gruppen?
 # (Keine explizite Antwort nötig, nur eine Überlegung.)
 
+Speech Science hat am meisten Fruaen, die mittelgroß sind.Klinische Linguistik hat nicht sehr viele mittelgroße, dafür mehr maximal bz minimalgroße Frauen.
+
 # Welche Gruppe hat gefehlt? Wie viele Datenpunkte gab es für die Gruppe?
 # (Keine explizite Antwort nötig, nur eine Überlegung.)
+
+Other (2) und Germanistische Linguistik (1)
 
 # Wir können auch die verschiedenen Maße der Streuung berechnen.
 # In R gibt es oft verschiedene Möglichkeiten, etwas zu machen. Wir haben bisher
@@ -111,6 +122,8 @@ dat <- read.table("body_dim_long.tab",header=TRUE)
 # einer weiteren Syntax machen:
 #klinisch <- frauen[frauen$major == "M.A..Klinische.Linguistik",]
 #print(klinisch)
+> klinisch <- women[women$major == "M.A..Klinische.Linguistik",]
+  > print(klinisch)
 
 # Das sieht erstmal sehr vervwirrend aus, ist es aber nicht. Die eckigen
 # Klammern bestimmen die Auswahl an Elementen. Wir haben das ja bei Indizen in
@@ -127,16 +140,22 @@ dat <- read.table("body_dim_long.tab",header=TRUE)
 # Linguistik Kognition und Kommunikation und Speech Science
 # HINT: wie sehen die Namen aus bzw. wie werden sie im data frame buchstabiert?
 #linkk <- frauen[CODE_HIER]
+> linkk <- women[women$major == "M.A..Linguistik.Kognition.und.Kommunikation",]
+  > print(linkk)
 #speech <- frauen[CODE_HIER] 
+speech <- women[women$major == "M.A..Speech.Science",]
+  > print(speech)
 
 # Berechnen Sie -- ohne Hilfe von sd() -- die Standardabweichung für die Größe der drei 
 # Gruppen. Sie können auch weitere Zeilen hinzufügen, wenn es Ihnen so leichter
 # ist. 
 # HINT: Formel und Beispiel für die Berechnung auf den Folien!
-#klinisch.sd <- CODE_HIER
-#linkk.sd <- CODE_HIER
-#speech.sd <- CODE_HIER
+klinisch.sd <- sqrt(mean((klinisch$height - mean(klinisch$height))^2))
+linkk.sd <- sqrt(mean((linkk$height - mean(linkk$height))^2))
+speech.sd <- sqrt(mean((speech$height - mean(speech$height))^2))
+
 
 # Berichten Sie jetzt die Mittelwerte und Standardabweichungen für die drei Gruppen. Die erste Gruppe steht hier als Muster:
 #print( paste("Studiengang: Klinische Linguistik","Mean:",mean(klinisch$height),"SD:",klinisch.sd) )
-#CODE_HIER
+print( paste("Studiengang: Linguistitk Kognition und Kommunikation","Mean:",mean(linkk$height),"SD:",linkk.sd) )
+print( paste("Studiengang: Speech Science","Mean:",mean(speech$height),"SD:",speech.sd) )
