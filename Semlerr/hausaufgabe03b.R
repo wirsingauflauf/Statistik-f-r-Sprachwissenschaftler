@@ -74,7 +74,7 @@ print(my.data**3)
 
 # aber nicht für den Modalwert!
 # Es gibt aber andere Funktionen, die uns da helfen.
-# more.data <- c("m","m","w","w","m","w","w","w","w","w","w","m","m","m","w","w","w")
+# more.data <- c
 
 # with table()
 # print(table(more.data))
@@ -96,7 +96,8 @@ print(my.data**3)
 # print(tabelle.rel)
 
 # Vervollständigen Sie folgende Zeile, sodass Prozentwerte aus den relativen
-# Häufigkeiten entst ehen: tabelle.prozent <- tabelle.rel code_hier 
+# Häufigkeiten entst ehen: tabelle.prozent <- tabelle.rel 
+tabelle.rel <- tabelle / 100
 # print(tabelle.prozent)
 
 # Aber die Frage bleibt, wie berechnen wir den Modus? Durch sortieren!
@@ -109,13 +110,14 @@ print(my.data**3)
 
 # Nehmen Sie das erste Element aus dem obigen Ergebnis, um den Modalwert zu
 # bekommen:
-# modus <- code_hier
+# modus <- 11
 
 # Verständisfrage: gibt es immer nur *einen* Modalwert? 
 # Wenn nicht, ist der Code oben korrekt? Warum?
 # Schreiben Sie Ihre Antwort als Comment hier.
 
-# antwort_hier
+# antwort: in diesem Fall gibt es nur zwei Elemente mit unterschiedlicher Größe. 
+# Also ist der Code Korrekt. Es kann aber vorkommen, dass es mehrere gleich große Elemente gibt. 
 
 # Als Abscheid ein Beispiel mit der Darstellung Frequenzdaten mit Säulendiagramm
 # bzw. Histogramm
